@@ -5,4 +5,4 @@
 	$dbname = 'xss';
 	$mailSever = '';
 	$mailUser = '';
-	$mailSecret = '';
+	$mailPassword = '';
