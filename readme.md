@@ -16,7 +16,7 @@ pi2@chamd5.org
 
 - 配置 xss、null 文件夹 为777权限
 
-- 自行更改 1 69行代码 xhr.open() 地址为你的域名
+- 自行更改文件1中第69行代码 xhr.open() 地址为你的域名
 
 如果采用 teddysun/lamp 默认配置，需要删除```/usr/local/apache/conf/vhost/virtual_host.conf```的默认header后重启服务。
 
