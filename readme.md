@@ -16,6 +16,8 @@ pi2@chamd5.org
 
 - 配置 xss、null 文件夹 为777权限
 
+- 自行更改 1 69行代码 xhr.open() 地址为你的域名
+
 如果采用 teddysun/lamp 默认配置，需要删除```/usr/local/apache/conf/vhost/virtual_host.conf```的默认header后重启服务。
 
 请自行更改php.ini max_size大一点。(因为图片太大了,不大的话可能接收不到数据，从而漏收xss结果信息)。
